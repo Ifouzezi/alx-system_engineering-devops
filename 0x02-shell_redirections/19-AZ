@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $word | tr Ac Ze
+echo $word | sed 's/A/Z/g; s/c/e/g'

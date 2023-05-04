@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-puts ARGV[0].scan(/^h.n$/).join
+
+pattern = /^h.n$/
+puts ARGV[0].scan(pattern).join

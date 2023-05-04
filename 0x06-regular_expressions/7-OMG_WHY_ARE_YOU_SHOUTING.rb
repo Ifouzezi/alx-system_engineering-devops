@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-puts ARGV[0].scan(/[A-Z]*/).join
+
+pattern = /[A-Z]*/
+puts ARGV[0].scan(pattern).join

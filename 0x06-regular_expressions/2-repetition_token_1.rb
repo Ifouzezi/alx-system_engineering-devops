@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-puts ARGV[0].scan(/hb?t?n/).join
+
+pattern = /\(\d{3}\)\s\d{3}-\d{4}/
+puts ARGV[0].scan(pattern).join

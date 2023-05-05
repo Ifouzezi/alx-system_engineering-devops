@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Configures an Ubuntu server as follows:
+#   - localhost resolves to 127.0.0.3
+#   - facebook.com resolves to 1.1.1.1
+
+HOSTS_FILE="/etc/hosts"
+TEMP_FILE="$(mktemp)"
+
+# Copy the existing hosts file to a temporary file
+cp "$HOSTS_FILE" "$TEMP_FILE"
+
+# Replace existing entries with new ones
+sed -i 's/^127\.0\.0\.1[[:space:]]*localhost/127.0.0.3\tlocalhost/g' "$TEMP_FILE"
+echo "1.1.1.1 facebook.com" >> "$TEMP_FILE"
+
+# Overwrite the original hosts file
+sudo cp "$TEMP_FILE" "$HOSTS_FILE"
+rm "$TEMP_FILE"

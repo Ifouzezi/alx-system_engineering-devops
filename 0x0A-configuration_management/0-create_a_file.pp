@@ -1,5 +1,5 @@
 # Create file in directory with permissions
-file { '/tmp/holberton':
+file { '/tmp/school':
   ensure  => file,
   mode    => '0744',
   content => 'I love Puppet',

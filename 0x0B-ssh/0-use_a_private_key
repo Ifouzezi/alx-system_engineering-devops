@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-### Uses ssh to connect using private key in file
-ssh -i ~/.ssh/school ubuntu@20.04
+# connecting to my server using a different identity file
+chmod 0600 ~/.ssh/school
+ssh -i ~/.ssh/school ubuntu@54.160.79.143

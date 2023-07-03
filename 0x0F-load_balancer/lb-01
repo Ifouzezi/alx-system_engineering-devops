@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+### Logs into lb-01 
+
+ssh -i /Key ubuntu@54.89.142.211

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+### Logs into web-02
+
+ssh -i /Key ubuntu@54.237.96.153

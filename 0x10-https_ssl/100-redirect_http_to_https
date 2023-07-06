@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# HAproxy SSL termination
+# No loophole in your website traffic
 global
         log /dev/log    local0
         log /dev/log    local1 notice
@@ -49,6 +49,7 @@ defaults
 frontend haproxynode
     bind *:80
     reqadd X-Forwarded-Proto:\ http
+    redirect scheme https code 301 if !{ ssl_fc }
     mode http
     default_backend www-backend
 

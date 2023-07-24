@@ -1,38 +1,33 @@
 #!/usr/bin/python3
-""" Queries REST API for employee info
-    argv 1 = int employee ID
-"""
+import requests
+from sys import argv
+
+
 if __name__ == "__main__":
-    import requests as r
-    from sys import argv
+    _id = argv[1]
 
-    # Finds employee name by "id" param in /users/
-    name_q = r.get("https://jsonplaceholder.typicode.com/users/{}/"
-                   .format(argv[1]))
-    data = name_q.json()
-    employee_name = data.get("name")  # Corrected from data.get("name")
+    base_url = "https://jsonplaceholder.typicode.com/"
+    user_url = "{}users/{}".format(base_url, _id)
+    tasks_url = "{}todos?userId={}".format(base_url, _id)
 
-    # Finds employee tasks by "userID" param; /users/ & /todo/ are linked
-    url = "https://jsonplaceholder.typicode.com/users/1/todos/"
-    task_q = r.get(url, params={'userId': argv[1]})
-    data = task_q.json()
+    response = requests.get(user_url)
+    use_info = response.json()
+    name = use_info["name"]
 
-    # Finds total number of tasks
-    task_total = len(data)
+    res = requests.get(tasks_url)
+    tasks = res.json()
 
-    # Finds total number of completed tasks
-    task_completed = 0
-    for dicts in data:
-        for k, v in dicts.items():
-            if k == 'completed' and v is True:
-                task_completed += 1
+    done_tasks = 0
+    total_tasks = 0
+    completed_titles = []
+    for task in tasks:
+        if task["completed"]:
+            done_tasks += 1
+            completed_titles.append(task["title"])
+        total_tasks += 1
 
-    # Prints first line in specified format:
-    print("Employee {} is done with tasks({}/{}):"
-          .format(employee_name, task_completed, task_total))
-
-    # Prints subsequent lines as titles of completed tasks:
-    for dicts in data:
-        if dicts['completed']:  # Simplified the condition
-            print("\t{}".format(dicts['title']))
-
+    print("Employee {} ".format(name), end="")
+    print("is done with tasks({}/{}):".format(done_tasks, total_tasks))
+    for title in completed_titles:
+        print("\t {}".format(title))
+        

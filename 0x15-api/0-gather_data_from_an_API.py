@@ -17,24 +17,20 @@ if __name__ == "__main__":
     task_q = r.get(url, params={'userId': argv[1]})
     data = task_q.json()
 
-    # Finds total number of tasks
-    task_total = len(data)
-
-    # Finds total number of completed tasks
+    # Initialize counters for total and completed tasks
+    task_total = 0
     task_completed = 0
-    for dicts in data:
-        for k, v in dicts.items():
-            if k == 'completed' and v is True:
-                    task_completed += 1
+
+    # Count total and completed tasks
+    for task in data:
+        task_total += 1
+        if task['completed']:
+            task_completed += 1
 
     # Prints first line in specified format:
-
-    print("Employee {} is done with tasks({}/{}):"
-          .format(employee_name, task_completed, task_total))
+    print("To Do Count: {}/{}".format(task_completed, task_total))
 
     # Prints subsequent lines as titles of completed tasks:
-
-    for dicts in data:
-        for k, v in dicts.items():
-            if k == 'completed' and v is True:
-                    print("\t {}".format(dicts['title']))
+    for task in data:
+        if task['completed']:
+            print("\t{}".format(task['title']))

@@ -7,9 +7,10 @@ if __name__ == "__main__":
     from sys import argv
 
     # Finds employee name by "id" param in /users/
-    name_q = r.get("https://jsonplaceholder.typicode.com/users/{}/".format(argv[1]))
+    name_q = r.get("https://jsonplaceholder.typicode.com/users/{}/"
+                   .format(argv[1]))
     data = name_q.json()
-    employee_name = data.get("name")
+    employee_name = data.get("name")  # Corrected from data.get("name")
 
     # Finds employee tasks by "userID" param; /users/ & /todo/ are linked
     url = "https://jsonplaceholder.typicode.com/users/1/todos/"
@@ -34,3 +35,4 @@ if __name__ == "__main__":
     for dicts in data:
         if dicts['completed']:  # Simplified the condition
             print("\t{}".format(dicts['title']))
+

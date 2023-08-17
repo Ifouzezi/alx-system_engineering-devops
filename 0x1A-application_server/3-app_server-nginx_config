@@ -15,12 +15,14 @@
 # Nginx is set up to run on the standard HTTP port and listen for requests
 
 # this specifies that there is a WSGI server running on port 5000
-upstream app_server_gunicorn {
+upstream app_server_gunicorn 
+{
 	  server localhost:5000 fail_timeout=0;
 	   }
 
 # this specifies that there is a WSGI server running on port 5001
-upstream app_server_gunicorn_6 {
+upstream app_server_gunicorn_6 
+{
 	  server localhost:5001 fail_timeout=0;
 	   }
 
@@ -56,10 +58,12 @@ server {
 
        # nginx should serve up static files and never send to the WSGI server
 
-       location /hbnb_static {
+       location /hbnb_static 
+       {
        		 alias /data/web_static/current/;
 		 }
-		 location /redirect_me {
+		 location /redirect_me 
+         {
 		 	   return 301 $scheme://www.google.com;
 
 			   # First attempt to serve request as file, then
@@ -68,7 +72,8 @@ server {
 			     }
 			     # requests that do not fall under /static are passed on to the WSGI
 			     # server that was specified above running on port 5001
-			     location ^~ /airbnb-dynamic {
+			     location ^~ /airbnb-dynamic
+                  {
 
 			     proxy_pass http://app_server_gunicorn_6/;
 
@@ -82,16 +87,18 @@ server {
 
 			     # requests that do not fall under /static are passed on to the WSGI
 			     # server that was specified above running on port 5000
-location /airbnb-onepage {
+location /airbnb-onepage 
+{
 	 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 	 proxy_set_header Host $http_host;
 	 proxy_redirect off;
 	 try_files $uri @app_server;
 	 }
-location @app_server {
+location @app_server 
+{
 	 proxy_pass http://app_server_gunicorn;
         }
-}
+
 
 	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
 	#
